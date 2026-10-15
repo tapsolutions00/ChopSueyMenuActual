@@ -1,0 +1,1326 @@
+/* ==========================================================================
+   CHOP SUEY INTERNACIONAL - SISTEMA DE DISEÑO Y ESTILOS
+   Diseñado específicamente para experiencia móvil, rápido y de alto contraste.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VARIABLES DE DISEÑO (DESIGN TOKENS)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Paleta cromática oficial de Chop Suey Internacional */
+  --color-red-primary: #d91c1b;       /* Rojo imperial del logo */
+  --color-red-dark: #b01010;          /* Rojo sombra / encabezados */
+  --color-red-deep: #800707;          /* Fondo banners profundos */
+  --color-red-subtle: #fdf2f2;        /* Fondo tenue para destaques */
+
+  --color-gold-accent: #f5b300;       /* Amarillo dorado de artes promocionales */
+  --color-gold-light: #fff9e6;        /* Fondo claro dorado */
+  --color-gold-dark: #996e00;         /* Texto legible sobre dorado */
+
+  --color-green-accent: #1e7e34;      /* Acento vegetariano / WhatsApp */
+  --color-green-bg: #eaf7ec;
+
+  /* Superficies y fondos */
+  --color-surface-card: #ffffff;      /* Superficie blanca para lectura óptima */
+  --color-bg-body: #f8f7f4;           /* Fondo general cálido (evita fatiga visual) */
+  --color-surface-muted: #f2efe9;     /* Fondo de contenedores secundarios */
+  --color-surface-hover: #faf8f5;
+
+  /* Jerarquía de texto de alto contraste (WCAG AAA) */
+  --color-text-primary: #1a1714;     /* Negro cálido para máxima legibilidad */
+  --color-text-secondary: #4a453e;   /* Gris cálido para ingredientes y descripciones */
+  --color-text-muted: #736b63;       /* Metadata y notas secundarias */
+  --color-text-inverse: #ffffff;     /* Texto sobre rojo */
+
+  /* Bordes y separadores */
+  --color-border-subtle: #eae6dd;
+  --color-border-medium: #d6cfc2;
+  --color-border-red: rgba(217, 28, 27, 0.2);
+
+  /* Sombras moderadas (sin excesos) */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(26, 23, 20, 0.08);
+  --shadow-lg: 0 8px 24px rgba(26, 23, 20, 0.12);
+  --shadow-red: 0 4px 14px rgba(217, 28, 27, 0.25);
+
+  /* Tipografías */
+  --font-display: 'Outfit', 'Cinzel', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Espaciado sistemático de 4px / 8px */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 20px;
+  --space-xl: 28px;
+  --space-2xl: 40px;
+
+  /* Radios de borde */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-full: 9999px;
+
+  /* Altura de elementos fijos */
+  --header-height: 64px;
+  --nav-height: 48px;
+
+  /* Transiciones */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET Y BASES
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-body);
+  background-color: var(--color-bg-body);
+  color: var(--color-text-primary);
+  font-size: 16px;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height) + 16px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+  background-color: var(--color-bg-body);
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 16px));
+}
+
+img, picture, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. CONTENEDOR PRINCIPAL Y ADAPTACIÓN
+   -------------------------------------------------------------------------- */
+.app-container {
+  width: 100%;
+  max-width: 640px; /* Ancho optimizado móvil / lectura cómoda en tablet y desktop */
+  margin: 0 auto;
+  background-color: var(--color-bg-body);
+  min-height: 100vh;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.04);
+  position: relative;
+}
+
+@media (min-width: 860px) {
+  .app-container {
+    max-width: 780px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. ENCABEZADO COMPACTO DE MARCA
+   -------------------------------------------------------------------------- */
+.brand-header {
+  background: linear-gradient(135deg, var(--color-red-primary) 0%, var(--color-red-dark) 100%);
+  color: var(--color-text-inverse);
+  padding: calc(var(--space-md) + env(safe-area-inset-top, 0px)) var(--space-md) var(--space-md);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid var(--color-gold-accent);
+}
+
+/* Pagoda sutil de fondo */
+.brand-header::after {
+  content: "";
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 140px;
+  height: 140px;
+  background-image: url('../assets/images/logo/logo.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.brand-header__content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  position: relative;
+  z-index: 2;
+}
+
+.brand-logo-frame {
+  width: 58px;
+  height: 58px;
+  background-color: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 3px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.brand-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--radius-md) - 3px);
+}
+
+.brand-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1.15;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.brand-tagline {
+  font-size: 0.82rem;
+  color: var(--color-gold-accent);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 4px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: rgba(255, 255, 255, 0.18);
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+/* Barra de utilidades: búsqueda y llamadas */
+.header-actions {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+  align-items: center;
+}
+
+.search-bar-wrap {
+  position: relative;
+  flex: 1;
+}
+
+.search-input {
+  width: 100%;
+  background-color: #ffffff;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  padding: 8px 14px 8px 36px;
+  font-size: 0.88rem;
+  outline: none;
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.search-input:focus {
+  border-color: var(--color-red-primary);
+  box-shadow: 0 0 0 3px rgba(217, 28, 27, 0.15);
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #e5e5e5;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.quick-call-btn {
+  background-color: var(--color-gold-accent);
+  color: var(--color-text-primary);
+  padding: 8px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  min-height: 44px;
+}
+
+.quick-call-btn:hover {
+  background-color: #e5a700;
+}
+
+/* --------------------------------------------------------------------------
+   5. NAVEGACIÓN STICKY DE CATEGORÍAS
+   -------------------------------------------------------------------------- */
+.sticky-nav-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--color-border-subtle);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.categories-nav {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch;
+  padding: var(--space-xs) var(--space-md);
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+.categories-nav::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.cat-pill {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg-body);
+  border: 1px solid var(--color-border-subtle);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.cat-pill:hover {
+  background-color: var(--color-surface-muted);
+  color: var(--color-text-primary);
+}
+
+.cat-pill.is-active {
+  background-color: var(--color-red-primary);
+  color: #ffffff;
+  border-color: var(--color-red-primary);
+  box-shadow: 0 2px 8px rgba(217, 28, 27, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   6. SECCIÓN HERO: PROMOCIÓN 3×2
+   -------------------------------------------------------------------------- */
+.promo-hero-card {
+  margin: var(--space-md);
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 2px solid var(--color-gold-accent);
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.promo-hero-badge-strip {
+  background: linear-gradient(90deg, #d91c1b 0%, #b01010 100%);
+  color: #ffffff;
+  padding: 8px var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.promo-tag-pill {
+  background-color: var(--color-gold-accent);
+  color: var(--color-text-primary);
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.promo-hero-body {
+  padding: var(--space-md);
+}
+
+.promo-headline-wrap {
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.promo-huge-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 5vw, 2.3rem);
+  font-weight: 900;
+  color: var(--color-red-primary);
+  line-height: 1;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.promo-sub-headline {
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 3vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+}
+
+.promo-restriction-text {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* Cuadrícula de las 4 familias participantes con fotografías reales */
+.promo-families-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.promo-family-cell {
+  background-color: var(--color-surface-muted);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border-subtle);
+  transition: transform var(--transition-fast);
+}
+
+.promo-family-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: calc(var(--radius-md) - 2px);
+  background-color: #eee;
+}
+
+.promo-family-info {
+  padding: 6px 4px 2px;
+}
+
+.promo-family-name {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--color-red-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.promo-family-desc {
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+  line-height: 1.25;
+  margin-top: 2px;
+}
+
+.promo-footer-note {
+  margin-top: var(--space-sm);
+  padding: 8px 12px;
+  background-color: var(--color-gold-light);
+  border-left: 3px solid var(--color-gold-accent);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  color: var(--color-gold-dark);
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   7. TITULARES DE SECCIÓN Y DIVISORES CHINOS SUTILES
+   -------------------------------------------------------------------------- */
+.section-wrapper {
+  padding: var(--space-md) var(--space-md) var(--space-lg);
+  scroll-margin-top: calc(var(--nav-height) + 12px);
+}
+
+.section-wrapper + .section-wrapper {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.section-header {
+  margin-bottom: var(--space-md);
+  position: relative;
+}
+
+.section-header-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: var(--color-red-primary);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Pequeño ornamento geométrico tradicional chino */
+.section-title::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 18px;
+  background-color: var(--color-gold-accent);
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.section-accompaniment-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid var(--color-border-medium);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   8. ESPECIALIDADES Y FAVORITOS (CARDS CON FOTOGRAFÍA PROTAGONISTA)
+   -------------------------------------------------------------------------- */
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.featured-dish-card {
+  background-color: var(--color-surface-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.featured-dish-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.featured-dish-image-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  position: relative;
+  background-color: #f0eee8;
+  overflow: hidden;
+}
+
+.featured-dish-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.featured-dish-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: var(--color-red-primary);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.featured-dish-category-tag {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(26, 23, 20, 0.75);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.featured-dish-content {
+  padding: var(--space-md);
+}
+
+.dish-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+.dish-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.dish-price {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-red-primary);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.3px;
+}
+
+.dish-composition {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-gold-dark);
+  margin-top: 3px;
+}
+
+.dish-desc {
+  font-size: 0.84rem;
+  color: var(--color-text-secondary);
+  line-height: 1.42;
+  margin-top: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   9. FAMILIAS ORIENTALES (CHOP SUEY, CHOW MEIN, ARROZ CHINO, LO MEIN)
+   -------------------------------------------------------------------------- */
+.family-block {
+  background-color: var(--color-surface-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.family-header {
+  padding: var(--space-md) var(--space-md) var(--space-sm);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: linear-gradient(to right, #ffffff, var(--color-surface-muted));
+}
+
+.family-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.family-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--color-red-primary);
+  letter-spacing: 0.5px;
+}
+
+.family-badge {
+  background-color: var(--color-surface-muted);
+  border: 1px solid var(--color-border-medium);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.family-intro {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  line-height: 1.35;
+  margin-top: 6px;
+}
+
+.family-featured-photo-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #f0eee8;
+  position: relative;
+  overflow: hidden;
+}
+
+.family-featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.family-photo-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+  color: #ffffff;
+  padding: 16px var(--space-md) 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* Lista de variantes dentro de la familia */
+.variants-table {
+  padding: 0 var(--space-md);
+}
+
+.variant-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px dashed var(--color-border-subtle);
+  gap: var(--space-sm);
+}
+
+.variant-row:last-child {
+  border-bottom: none;
+}
+
+.variant-row.is-especial {
+  background-color: #fffdf5;
+  margin: 0 -16px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #fae8a4;
+  border-top: 1px solid #fae8a4;
+}
+
+.variant-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.variant-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.variant-name {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--color-text-primary);
+  line-height: 1.25;
+}
+
+.especial-tag {
+  background-color: var(--color-gold-accent);
+  color: var(--color-text-primary);
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.3px;
+}
+
+.veg-tag {
+  background-color: var(--color-green-bg);
+  color: var(--color-green-accent);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.variant-composition {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+.variant-price {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.98rem;
+  color: var(--color-red-primary);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   10. CATÁLOGO COMPACTO (FILAS CON NOMBRE A LA IZQ Y PRECIO A LA DER)
+   -------------------------------------------------------------------------- */
+.catalog-list {
+  background-color: var(--color-surface-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.catalog-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 13px var(--space-md);
+  border-bottom: 1px solid var(--color-border-subtle);
+  gap: var(--space-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.catalog-item:last-child {
+  border-bottom: none;
+}
+
+.catalog-item:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.catalog-item-thumb {
+  width: 58px;
+  height: 58px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  background-color: #f0eee8;
+  border: 1px solid var(--color-border-subtle);
+}
+
+.catalog-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.catalog-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-xs);
+}
+
+.catalog-item-name {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--color-text-primary);
+  line-height: 1.25;
+}
+
+.catalog-item-price {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.98rem;
+  color: var(--color-red-primary);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  margin-left: 6px;
+}
+
+.catalog-item-desc {
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  line-height: 1.35;
+  margin-top: 4px;
+}
+
+.catalog-item-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-gold-dark);
+  background-color: var(--color-gold-light);
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   11. SECCIÓN COMBOS Y OTRAS PROMOCIONES
+   -------------------------------------------------------------------------- */
+.combos-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.combo-card {
+  background-color: var(--color-surface-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.combo-card-image-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  position: relative;
+  background-color: #f0eee8;
+  overflow: hidden;
+}
+
+.combo-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.combo-card-price-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #1e7e34;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.combo-card-type-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: var(--color-gold-accent);
+  color: var(--color-text-primary);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+
+.combo-card-content {
+  padding: var(--space-md);
+}
+
+.combo-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-red-primary);
+  line-height: 1.2;
+}
+
+.combo-details-text {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  line-height: 1.35;
+  margin-top: 4px;
+}
+
+.combo-items-list {
+  list-style: none;
+  margin-top: var(--space-sm);
+  background-color: var(--color-bg-body);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.combo-item-li {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.combo-item-li::before {
+  content: "✔";
+  color: var(--color-green-accent);
+  font-size: 0.75rem;
+}
+
+.combo-note-text {
+  font-size: 0.73rem;
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs);
+  font-style: italic;
+}
+
+.combo-courtesy-badge {
+  display: inline-block;
+  background-color: var(--color-gold-light);
+  border: 1px solid #f6d884;
+  color: var(--color-gold-dark);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-xs);
+}
+
+/* --------------------------------------------------------------------------
+   12. EXTRAS Y GUARNICIONES (TABLA COMPACTA DE DOS COLUMNAS O CHIPS)
+   -------------------------------------------------------------------------- */
+.extras-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+  gap: var(--space-xs);
+}
+
+.extra-chip {
+  background-color: var(--color-surface-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.extra-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.extra-price {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: var(--color-red-primary);
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   13. SECCIÓN HISTORIA, CONTACTO Y PIE DE PÁGINA
+   -------------------------------------------------------------------------- */
+.footer-section {
+  background-color: #ffffff;
+  border-top: 3px solid var(--color-red-primary);
+  padding: var(--space-xl) var(--space-md) var(--space-lg);
+  margin-top: var(--space-lg);
+}
+
+.story-card {
+  background: linear-gradient(to bottom, #ffffff, var(--color-surface-muted));
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+  position: relative;
+}
+
+.story-card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-red-primary);
+  margin-bottom: 6px;
+}
+
+.story-card-text {
+  font-size: 0.84rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.contact-info-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.contact-card-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background-color: var(--color-bg-body);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px var(--space-md);
+  min-height: 52px;
+  transition: all var(--transition-fast);
+}
+
+.contact-card-link:hover {
+  border-color: var(--color-red-primary);
+  background-color: var(--color-surface-hover);
+}
+
+.contact-icon-frame {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.icon-whatsapp {
+  background-color: #25d366;
+  color: #ffffff;
+}
+
+.icon-phone {
+  background-color: var(--color-red-primary);
+  color: #ffffff;
+}
+
+.icon-location {
+  background-color: #ea4335;
+  color: #ffffff;
+}
+
+.icon-pedidosya {
+  background-color: #ff1a40;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 13px;
+}
+
+.contact-text-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-label {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.contact-val {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  word-break: break-word;
+}
+
+.pedidosya-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #e11d48;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.footer-copy {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border-subtle);
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   14. BARRA DE ACCIÓN RÁPIDA FLOTANTE (MOBILE DOCKED ACTIONS)
+   -------------------------------------------------------------------------- */
+.floating-action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid var(--color-border-subtle);
+  padding: 8px var(--space-md) calc(8px + env(safe-area-inset-bottom, 8px));
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.floating-action-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.floating-btn {
+  flex: 1;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
+}
+
+.floating-btn:active {
+  transform: scale(0.98);
+}
+
+.floating-btn-whatsapp {
+  background-color: #25d366;
+  color: #ffffff;
+}
+
+.floating-btn-call {
+  background-color: var(--color-red-primary);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   15. ESTADOS DE BÚSQUEDA Y MENÚ VACÍO
+   -------------------------------------------------------------------------- */
+.search-results-feedback {
+  background-color: var(--color-gold-light);
+  border: 1px solid #fae8a4;
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  margin: 0 var(--space-md) var(--space-sm);
+  font-size: 0.82rem;
+  color: var(--color-gold-dark);
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.no-results-box {
+  padding: var(--space-2xl) var(--space-md);
+  text-align: center;
+  color: var(--color-text-secondary);
+  display: none;
+}
+
+.no-results-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-xs);
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   16. ACCESIBILIDAD Y REDUCED MOTION
+   -------------------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--color-red-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
