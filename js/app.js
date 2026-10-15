@@ -1,6 +1,6 @@
 /**
  * CHOP SUEY INTERNACIONAL - Lógica de Interfaz y Navegación
- * Renderizado modular, seguimiento de scroll, búsqueda en vivo y accesibilidad.
+ * Barra fija en toda la página, combos compactos con modal lightbox y navegación estable.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -30,7 +30,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchFeedbackText = document.getElementById('search-feedback-text');
   const searchClearBtn = document.getElementById('search-clear-btn');
   const noResultsBox = document.getElementById('no-results-box');
+  const navContainer = document.querySelector('.categories-nav');
+  const stickyNav = document.querySelector('.sticky-nav-container');
   const navPills = document.querySelectorAll('.cat-pill');
+
+  // Modal Lightbox
+  const lightbox = document.getElementById('flyer-lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxPrice = document.getElementById('lightbox-price');
+  const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+  const lightboxOverlay = document.getElementById('lightbox-overlay');
 
   // Helper para buscar sección por ID
   function getSectionData(id) {
@@ -55,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="promo-restriction-text">${p.restriction}</div>
           </div>
 
-          <p class="section-subtitle" style="text-align: center; margin-bottom: 12px;">
+          <p class="section-subtitle" style="text-align: center; margin-bottom: 14px;">
             ${p.summary}
           </p>
 
@@ -121,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // Helper para renderizar lista estándar del catálogo
+  // Helper para renderizar catálogo regular
   function renderStandardCatalogList(container, sectionId) {
     const sec = getSectionData(sectionId);
     if (!container || !sec) return;
@@ -206,51 +216,107 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // 4. Renderizar Combos Promocionales
+  // 4. Renderizar Combos y Banquetes (Presentación Compacta, Equilibrada y con Afiche Ampliable)
   function renderCombos() {
     if (!combosContainer) return;
     const combos = data.promotions.combos;
     combosContainer.innerHTML = combos.map(c => `
-      <article class="combo-card" id="${c.id}" data-search-text="${c.name.toLowerCase()} ${(c.items || []).join(' ').toLowerCase()} ${c.details ? c.details.toLowerCase() : ''}">
-        <div class="combo-card-image-wrap">
-          <picture>
-            <source srcset="${c.image}" type="image/webp">
-            <img 
-              src="${c.imageFallback}" 
-              alt="${c.name} - Chop Suey Internacional" 
-              class="combo-card-img"
-              loading="lazy"
-              width="800"
-              height="500"
-            >
-          </picture>
-          <span class="combo-card-type-tag">${c.badge}</span>
-          <span class="combo-card-price-badge">${c.priceFormatted}</span>
-        </div>
-        <div class="combo-card-content">
-          <h3 class="combo-title">${c.name}</h3>
-          ${c.details ? `<p class="combo-details-text">${c.details}</p>` : ''}
+      <article class="combo-compact-card" id="${c.id}" data-search-text="${c.name.toLowerCase()} ${(c.items || []).join(' ').toLowerCase()} ${c.details ? c.details.toLowerCase() : ''}">
+        <div class="combo-compact-main">
+          <div class="combo-compact-header">
+            <span class="combo-type-tag">${c.badge}</span>
+            <span class="combo-price-pill">${c.priceFormatted}</span>
+          </div>
+
+          <h3 class="combo-compact-title">${c.name}</h3>
+          ${c.details ? `<p class="combo-compact-desc">${c.details}</p>` : ''}
           ${c.courtesy ? `<div class="combo-courtesy-badge">${c.courtesy}</div>` : ''}
 
           ${c.options ? `
-            <ul class="combo-items-list">
-              ${c.options.map(opt => `<li class="combo-item-li">${opt}</li>`).join('')}
+            <ul class="combo-items-compact" aria-label="Opciones del combo">
+              ${c.options.map(opt => `<li><span class="check-icon">✔</span> ${opt}</li>`).join('')}
             </ul>
           ` : ''}
 
           ${c.items ? `
-            <ul class="combo-items-list">
-              ${c.items.map(it => `<li class="combo-item-li">${it}</li>`).join('')}
+            <ul class="combo-items-compact" aria-label="Contenido del combo">
+              ${c.items.map(it => `<li><span class="check-icon">✔</span> ${it}</li>`).join('')}
             </ul>
           ` : ''}
 
-          ${c.note ? `<p class="combo-note-text">${c.note}</p>` : ''}
+          ${c.note ? `<p class="combo-note-compact">${c.note}</p>` : ''}
+        </div>
+
+        <div class="combo-compact-thumb-wrap">
+          <button type="button" class="combo-thumb-btn" data-full-flyer="${c.image}" data-combo-name="${c.name}" data-combo-price="${c.priceFormatted}" aria-label="Ver afiche oficial de ${c.name}">
+            <picture>
+              <source srcset="${c.image}" type="image/webp">
+              <img 
+                src="${c.imageFallback}" 
+                alt="Vista previa afiche ${c.name}" 
+                class="combo-compact-thumb"
+                loading="lazy"
+                width="120"
+                height="150"
+              >
+            </picture>
+            <span class="thumb-zoom-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              Ver afiche
+            </span>
+          </button>
         </div>
       </article>
     `).join('');
+
+    setupLightboxListeners();
   }
 
-  // 5. Renderizar Extras en Grid Compacto
+  // 5. Configurar Modal Lightbox para Afiches
+  function openLightbox(imgSrc, title, price) {
+    if (!lightbox || !lightboxImg) return;
+    lightboxImg.src = imgSrc;
+    lightboxImg.alt = title;
+    if (lightboxTitle) lightboxTitle.textContent = title;
+    if (lightboxPrice) lightboxPrice.textContent = price;
+    lightbox.style.display = 'flex';
+    requestAnimationFrame(() => {
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+    });
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    setTimeout(() => {
+      lightbox.style.display = 'none';
+      if (lightboxImg) lightboxImg.src = '';
+    }, 200);
+  }
+
+  function setupLightboxListeners() {
+    document.querySelectorAll('.combo-thumb-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const imgSrc = btn.getAttribute('data-full-flyer');
+        const title = btn.getAttribute('data-combo-name');
+        const price = btn.getAttribute('data-combo-price');
+        openLightbox(imgSrc, title, price);
+      });
+    });
+
+    if (lightboxCloseBtn) lightboxCloseBtn.onclick = closeLightbox;
+    if (lightboxOverlay) lightboxOverlay.onclick = closeLightbox;
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox && lightbox.classList.contains('is-open')) {
+        closeLightbox();
+      }
+    });
+  }
+
+  // 6. Renderizar Extras
   function renderExtras() {
     const sec = getSectionData('extras');
     if (!extrasContainer || !sec) return;
@@ -267,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Renderizar cada sección
+  // Ejecutar todos los renderizados
   renderPromoHero();
   renderFavorites();
   renderStandardCatalogList(entradasContainer, 'entradas');
@@ -281,66 +347,118 @@ document.addEventListener('DOMContentLoaded', () => {
   renderStandardCatalogList(postresContainer, 'postres');
   renderExtras();
 
-  // 6. Navegación Sticky: Scrollspy con IntersectionObserver
-  const sectionsToObserve = [
-    { id: 'seccion-promociones', navSelector: '[data-target="seccion-promociones"]' },
-    { id: 'seccion-favoritos', navSelector: '[data-target="seccion-favoritos"]' },
-    { id: 'seccion-entradas', navSelector: '[data-target="seccion-entradas"]' },
-    { id: 'seccion-sopas', navSelector: '[data-target="seccion-sopas"]' },
-    { id: 'seccion-platos-fuertes', navSelector: '[data-target="seccion-platos-fuertes"]' },
-    { id: 'seccion-combos', navSelector: '[data-target="seccion-combos"]' },
-    { id: 'seccion-bebidas', navSelector: '[data-target="seccion-bebidas"]' },
-    { id: 'seccion-mas', navSelector: '[data-target="seccion-mas"]' },
-    { id: 'seccion-contacto', navSelector: '[data-target="seccion-contacto"]' }
-  ];
+  // =========================================================================
+  // 7. NAVEGACIÓN Y DESPLAZAMIENTO ROBUSTO (BARRA FIJA PERMANENTE)
+  // =========================================================================
 
-  function setActiveNavPill(targetId) {
+  let isClickScrolling = false;
+  let clickScrollTimer = null;
+
+  // Actualiza el botón activo sin provocar desplazamientos de ventana
+  function updateActiveNavPill(targetId, shouldScrollNav = false) {
     navPills.forEach(pill => {
-      if (pill.getAttribute('data-target') === targetId) {
+      const match = pill.getAttribute('data-target') === targetId;
+      if (match) {
         pill.classList.add('is-active');
-        pill.setAttribute('aria-current', 'true');
-        pill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        pill.setAttribute('aria-selected', 'true');
+
+        if (shouldScrollNav && navContainer) {
+          const pillOffset = pill.offsetLeft;
+          const pillWidth = pill.offsetWidth;
+          const containerWidth = navContainer.clientWidth;
+          const targetScrollLeft = pillOffset - (containerWidth / 2) + (pillWidth / 2);
+
+          navContainer.scrollTo({
+            left: targetScrollLeft,
+            behavior: 'smooth'
+          });
+        }
       } else {
         pill.classList.remove('is-active');
-        pill.removeAttribute('aria-current');
+        pill.setAttribute('aria-selected', 'false');
       }
     });
   }
 
-  // Click en tabs de navegación
+  // Click en tabs de categorías
   navPills.forEach(pill => {
     pill.addEventListener('click', (e) => {
       e.preventDefault();
       const targetId = pill.getAttribute('data-target');
       const targetEl = document.getElementById(targetId);
-      if (targetEl) {
-        targetEl.scrollIntoView({ behavior: 'smooth' });
-        setActiveNavPill(targetId);
-      }
+
+      if (!targetEl) return;
+
+      isClickScrolling = true;
+      if (clickScrollTimer) clearTimeout(clickScrollTimer);
+      clickScrollTimer = setTimeout(() => {
+        isClickScrolling = false;
+      }, 750);
+
+      updateActiveNavPill(targetId, true);
+
+      // Descontar la altura exacta de la barra fija para que el título siempre quede visible
+      const navHeight = stickyNav ? stickyNav.offsetHeight : 52;
+      const elementRect = targetEl.getBoundingClientRect();
+      const absoluteTop = elementRect.top + window.pageYOffset;
+      const scrollToPosition = Math.max(0, absoluteTop - navHeight - 12);
+
+      window.scrollTo({
+        top: scrollToPosition,
+        behavior: 'smooth'
+      });
     });
   });
 
-  // IntersectionObserver para detectar la sección activa durante el scroll
-  const observerOptions = {
-    root: null,
-    rootMargin: '-80px 0px -60% 0px',
-    threshold: 0
-  };
+  // Secciones observadas
+  const observedSectionIds = [
+    'seccion-promociones',
+    'seccion-favoritos',
+    'seccion-entradas',
+    'seccion-sopas',
+    'seccion-platos-fuertes',
+    'seccion-combos',
+    'seccion-bebidas',
+    'seccion-mas',
+    'seccion-contacto'
+  ];
 
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        setActiveNavPill(entry.target.id);
+  // Scrollspy pasivo y ligero con requestAnimationFrame
+  let isTicking = false;
+  function handleScrollSpy() {
+    if (isClickScrolling) return;
+
+    const navHeight = stickyNav ? stickyNav.offsetHeight : 52;
+    const triggerPoint = navHeight + 50;
+
+    let currentSectionId = observedSectionIds[0];
+
+    for (let i = 0; i < observedSectionIds.length; i++) {
+      const el = document.getElementById(observedSectionIds[i]);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= triggerPoint) {
+          currentSectionId = observedSectionIds[i];
+        }
       }
-    });
-  }, observerOptions);
+    }
 
-  sectionsToObserve.forEach(item => {
-    const el = document.getElementById(item.id);
-    if (el) sectionObserver.observe(el);
-  });
+    updateActiveNavPill(currentSectionId, false);
+  }
 
-  // 7. Búsqueda y Filtrado en Tiempo Real
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        handleScrollSpy();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, { passive: true });
+
+  // =========================================================================
+  // 8. BÚSQUEDA Y FILTRADO EN TIEMPO REAL
+  // =========================================================================
   function handleSearch() {
     const query = searchInput.value.trim().toLowerCase();
 
@@ -376,13 +494,11 @@ document.addEventListener('DOMContentLoaded', () => {
       fam.style.display = (visibleVariants.length > 0) ? '' : 'none';
     });
 
-    // Mostrar feedback de conteo
     if (searchFeedback && searchFeedbackText) {
       searchFeedback.style.display = 'flex';
       searchFeedbackText.textContent = `${totalMatches} ${totalMatches === 1 ? 'resultado encontrado' : 'resultados encontrados'} para "${query}"`;
     }
 
-    // Mostrar estado sin resultados
     if (noResultsBox) {
       noResultsBox.style.display = (totalMatches === 0) ? 'block' : 'none';
     }
@@ -400,5 +516,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  console.log('Chop Suey Internacional - Menú digital cargado con éxito.');
+  console.log('Chop Suey Internacional - Menú digital completamente optimizado.');
 });

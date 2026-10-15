@@ -1,23 +1,23 @@
 /* ==========================================================================
-   CHOP SUEY INTERNACIONAL - SISTEMA DE DISEÑO Y ESTILOS
-   Diseñado específicamente para experiencia móvil, rápido y de alto contraste.
+   CHOP SUEY INTERNACIONAL - SISTEMA DE DISEÑO Y ESTILOS MÓVILES
+   Barra fija garantizada, combos compactos con afiche ampliable y alto contraste.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    1. VARIABLES DE DISEÑO (DESIGN TOKENS)
    -------------------------------------------------------------------------- */
 :root {
-  /* Paleta cromática oficial de Chop Suey Internacional */
+  /* Paleta oficial de Chop Suey Internacional */
   --color-red-primary: #d91c1b;       /* Rojo imperial del logo */
   --color-red-dark: #b01010;          /* Rojo sombra / encabezados */
   --color-red-deep: #800707;          /* Fondo banners profundos */
   --color-red-subtle: #fdf2f2;        /* Fondo tenue para destaques */
 
-  --color-gold-accent: #f5b300;       /* Amarillo dorado de artes promocionales */
+  --color-gold-accent: #f5b300;       /* Amarillo dorado de afiches oficiales */
   --color-gold-light: #fff9e6;        /* Fondo claro dorado */
-  --color-gold-dark: #996e00;         /* Texto legible sobre dorado */
+  --color-gold-dark: #8c5b00;         /* Texto legible sobre dorado */
 
-  --color-green-accent: #1e7e34;      /* Acento vegetariano / WhatsApp */
+  --color-green-accent: #1e7e34;      /* Acento vegetal / precios de banquetes */
   --color-green-bg: #eaf7ec;
 
   /* Superficies y fondos */
@@ -37,17 +37,16 @@
   --color-border-medium: #d6cfc2;
   --color-border-red: rgba(217, 28, 27, 0.2);
 
-  /* Sombras moderadas (sin excesos) */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  /* Sombras moderadas */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 12px rgba(26, 23, 20, 0.08);
-  --shadow-lg: 0 8px 24px rgba(26, 23, 20, 0.12);
-  --shadow-red: 0 4px 14px rgba(217, 28, 27, 0.25);
+  --shadow-lg: 0 8px 24px rgba(26, 23, 20, 0.14);
 
   /* Tipografías */
   --font-display: 'Outfit', 'Cinzel', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  /* Espaciado sistemático de 4px / 8px */
+  /* Espaciado */
   --space-2xs: 4px;
   --space-xs: 8px;
   --space-sm: 12px;
@@ -63,9 +62,8 @@
   --radius-xl: 22px;
   --radius-full: 9999px;
 
-  /* Altura de elementos fijos */
-  --header-height: 64px;
-  --nav-height: 48px;
+  /* Altura de navegación pegajosa */
+  --nav-height: 52px;
 
   /* Transiciones */
   --transition-fast: 0.15s ease;
@@ -73,7 +71,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   2. RESET Y BASES
+   2. RESET Y BASES (SIN ROMPER POSITION: STICKY)
    -------------------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -88,7 +86,7 @@ html {
   font-size: 16px;
   line-height: 1.5;
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--nav-height) + 16px);
+  scroll-padding-top: calc(var(--nav-height) + 14px);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -96,7 +94,8 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
+  /* IMPORTANTE: overflow-x: clip previene desborde sin crear contenedor de scroll que rompa sticky */
+  overflow-x: clip;
   position: relative;
   background-color: var(--color-bg-body);
   padding-bottom: calc(72px + env(safe-area-inset-bottom, 16px));
@@ -125,11 +124,11 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   3. CONTENEDOR PRINCIPAL Y ADAPTACIÓN
+   3. CONTENEDOR PRINCIPAL
    -------------------------------------------------------------------------- */
 .app-container {
   width: 100%;
-  max-width: 640px; /* Ancho optimizado móvil / lectura cómoda en tablet y desktop */
+  max-width: 640px; /* Lectura óptima móvil */
   margin: 0 auto;
   background-color: var(--color-bg-body);
   min-height: 100vh;
@@ -147,57 +146,41 @@ a {
    4. ENCABEZADO COMPACTO DE MARCA
    -------------------------------------------------------------------------- */
 .brand-header {
-  background: linear-gradient(135deg, var(--color-red-primary) 0%, var(--color-red-dark) 100%);
+  background: linear-gradient(135deg, #d91c1b 0%, #b01010 100%);
   color: var(--color-text-inverse);
-  padding: calc(var(--space-md) + env(safe-area-inset-top, 0px)) var(--space-md) var(--space-md);
+  padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 14px;
   position: relative;
-  overflow: hidden;
   border-bottom: 3px solid var(--color-gold-accent);
-}
-
-/* Pagoda sutil de fondo */
-.brand-header::after {
-  content: "";
-  position: absolute;
-  right: -20px;
-  bottom: -20px;
-  width: 140px;
-  height: 140px;
-  background-image: url('../assets/images/logo/logo.webp');
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0.12;
-  pointer-events: none;
 }
 
 .brand-header__content {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: 12px;
   position: relative;
   z-index: 2;
 }
 
 .brand-logo-frame {
-  width: 58px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
   background-color: #ffffff;
-  border-radius: var(--radius-md);
-  padding: 3px;
+  border-radius: 10px;
+  padding: 2px;
   flex-shrink: 0;
-  box-shadow: var(--shadow-md);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .brand-logo-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: calc(var(--radius-md) - 3px);
+  border-radius: 8px;
 }
 
 .brand-info {
@@ -207,9 +190,9 @@ a {
 
 .brand-title {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.18rem;
   font-weight: 800;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   line-height: 1.15;
   color: #ffffff;
   text-transform: uppercase;
@@ -217,34 +200,30 @@ a {
 }
 
 .brand-tagline {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--color-gold-accent);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
 .brand-meta {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.85);
-  margin-top: 4px;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 3px;
 }
 
 .status-badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background-color: rgba(255, 255, 255, 0.18);
-  padding: 2px 7px;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 1px 7px;
   border-radius: var(--radius-full);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.3px;
+  font-size: 0.68rem;
+  font-weight: 700;
 }
 
 .status-dot {
@@ -252,37 +231,42 @@ a {
   height: 6px;
   background-color: #22c55e;
   border-radius: 50%;
-  box-shadow: 0 0 6px #22c55e;
+  box-shadow: 0 0 5px #22c55e;
 }
 
-/* Barra de utilidades: búsqueda y llamadas */
+/* Barra de acciones: Buscador + Botón Llamar */
 .header-actions {
   display: flex;
-  gap: var(--space-xs);
-  margin-top: var(--space-sm);
+  gap: 10px;
+  margin-top: 12px;
   align-items: center;
+  position: relative;
+  z-index: 3;
 }
 
 .search-bar-wrap {
   position: relative;
   flex: 1;
+  min-width: 0;
 }
 
 .search-input {
   width: 100%;
+  height: 44px;
   background-color: #ffffff;
   color: var(--color-text-primary);
-  border: 1px solid var(--color-border-subtle);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: var(--radius-full);
-  padding: 8px 14px 8px 36px;
+  padding: 0 14px 0 38px;
   font-size: 0.88rem;
   outline: none;
-  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .search-input:focus {
-  border-color: var(--color-red-primary);
-  box-shadow: 0 0 0 3px rgba(217, 28, 27, 0.15);
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(245, 179, 0, 0.5);
 }
 
 .search-icon {
@@ -291,8 +275,8 @@ a {
   top: 50%;
   transform: translateY(-50%);
   color: var(--color-text-muted);
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   pointer-events: none;
 }
 
@@ -303,8 +287,8 @@ a {
   transform: translateY(-50%);
   background-color: #e5e5e5;
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   display: none;
   align-items: center;
   justify-content: center;
@@ -314,47 +298,55 @@ a {
 
 .quick-call-btn {
   background-color: var(--color-gold-accent);
-  color: var(--color-text-primary);
-  padding: 8px 12px;
+  color: #1a1714;
+  height: 44px;
+  padding: 0 16px;
   border-radius: var(--radius-full);
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 800;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  gap: 6px;
   white-space: nowrap;
-  box-shadow: var(--shadow-sm);
-  min-height: 44px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
 }
 
-.quick-call-btn:hover {
+.quick-call-btn:active {
+  transform: scale(0.97);
   background-color: #e5a700;
 }
 
 /* --------------------------------------------------------------------------
-   5. NAVEGACIÓN STICKY DE CATEGORÍAS
+   5. NAVEGACIÓN STICKY DE CATEGORÍAS (PERMANENCIA TOTAL EN TODA LA PÁGINA)
    -------------------------------------------------------------------------- */
 .sticky-nav-container {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   background-color: #ffffff;
-  border-bottom: 1px solid var(--color-border-subtle);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border-bottom: 2px solid var(--color-border-subtle);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  width: 100%;
 }
 
 .categories-nav {
   display: flex;
   overflow-x: auto;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  padding: var(--space-xs) var(--space-md);
-  gap: var(--space-xs);
+  padding: 8px 14px;
+  gap: 8px;
   align-items: center;
 }
 
 .categories-nav::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
 }
 
 .cat-pill {
@@ -366,7 +358,7 @@ a {
   color: var(--color-text-secondary);
   background-color: var(--color-bg-body);
   border: 1px solid var(--color-border-subtle);
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
   white-space: nowrap;
   min-height: 38px;
   display: flex;
@@ -428,7 +420,7 @@ a {
 
 .promo-headline-wrap {
   text-align: center;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
 }
 
 .promo-huge-title {
@@ -458,7 +450,6 @@ a {
   letter-spacing: 0.5px;
 }
 
-/* Cuadrícula de las 4 familias participantes con fotografías reales */
 .promo-families-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -473,7 +464,6 @@ a {
   display: flex;
   flex-direction: column;
   border: 1px solid var(--color-border-subtle);
-  transition: transform var(--transition-fast);
 }
 
 .promo-family-thumb {
@@ -515,11 +505,11 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   7. TITULARES DE SECCIÓN Y DIVISORES CHINOS SUTILES
+   7. SECCIONES Y ENCABEZADOS DE CATEGORÍA
    -------------------------------------------------------------------------- */
 .section-wrapper {
   padding: var(--space-md) var(--space-md) var(--space-lg);
-  scroll-margin-top: calc(var(--nav-height) + 12px);
+  scroll-margin-top: calc(var(--nav-height) + 14px);
 }
 
 .section-wrapper + .section-wrapper {
@@ -541,17 +531,16 @@ a {
 
 .section-title {
   font-family: var(--font-display);
-  font-size: 1.28rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--color-red-primary);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* Pequeño ornamento geométrico tradicional chino */
 .section-title::before {
   content: "";
   display: inline-block;
@@ -582,7 +571,7 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   8. ESPECIALIDADES Y FAVORITOS (CARDS CON FOTOGRAFÍA PROTAGONISTA)
+   8. FAVORITOS DE LA CASA
    -------------------------------------------------------------------------- */
 .favorites-list {
   display: flex;
@@ -601,11 +590,6 @@ a {
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.featured-dish-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
 .featured-dish-image-wrap {
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -618,7 +602,6 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-normal);
 }
 
 .featured-dish-badge {
@@ -641,8 +624,7 @@ a {
   position: absolute;
   bottom: 10px;
   left: 10px;
-  background-color: rgba(26, 23, 20, 0.75);
-  backdrop-filter: blur(4px);
+  background-color: rgba(26, 23, 20, 0.8);
   color: #ffffff;
   padding: 3px 8px;
   border-radius: var(--radius-sm);
@@ -668,7 +650,6 @@ a {
   color: var(--color-text-primary);
   line-height: 1.25;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
 }
 
 .dish-price {
@@ -678,7 +659,6 @@ a {
   color: var(--color-red-primary);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.3px;
 }
 
 .dish-composition {
@@ -726,7 +706,7 @@ a {
   font-size: 1.2rem;
   font-weight: 800;
   color: var(--color-red-primary);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 .family-badge {
@@ -770,10 +750,8 @@ a {
   padding: 16px var(--space-md) 6px;
   font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.2px;
 }
 
-/* Lista de variantes dentro de la familia */
 .variants-table {
   padding: 0 var(--space-md);
 }
@@ -825,7 +803,6 @@ a {
   font-weight: 800;
   padding: 1px 6px;
   border-radius: var(--radius-sm);
-  letter-spacing: 0.3px;
 }
 
 .veg-tag {
@@ -853,7 +830,7 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   10. CATÁLOGO COMPACTO (FILAS CON NOMBRE A LA IZQ Y PRECIO A LA DER)
+   10. CATÁLOGO COMPACTO
    -------------------------------------------------------------------------- */
 .catalog-list {
   background-color: var(--color-surface-card);
@@ -938,7 +915,7 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   11. SECCIÓN COMBOS Y OTRAS PROMOCIONES
+   11. REDISEÑO DE COMBOS Y BANQUETES (COMPACTO, EQUILIBRADO Y CON LIGHTBOX)
    -------------------------------------------------------------------------- */
 .combos-grid {
   display: flex;
@@ -946,107 +923,108 @@ a {
   gap: var(--space-md);
 }
 
-.combo-card {
+.combo-compact-card {
   background-color: var(--color-surface-card);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border-subtle);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   display: flex;
+  align-items: stretch;
+  gap: 12px;
+  padding: 12px 14px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.combo-compact-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.combo-compact-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
-.combo-card-image-wrap {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  position: relative;
-  background-color: #f0eee8;
-  overflow: hidden;
+.combo-compact-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
 }
 
-.combo-card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.combo-card-price-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #1e7e34;
-  color: #ffffff;
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.1rem;
-  letter-spacing: 0.3px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.combo-card-type-tag {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+.combo-type-tag {
   background-color: var(--color-gold-accent);
   color: var(--color-text-primary);
-  padding: 3px 8px;
+  padding: 2px 8px;
   border-radius: var(--radius-sm);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
 }
 
-.combo-card-content {
-  padding: var(--space-md);
+.combo-price-pill {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--color-green-accent);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
-.combo-title {
+.combo-compact-title {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--color-red-primary);
   line-height: 1.2;
+  margin-bottom: 2px;
 }
 
-.combo-details-text {
-  font-size: 0.82rem;
+.combo-compact-desc {
+  font-size: 0.76rem;
   color: var(--color-text-secondary);
-  line-height: 1.35;
-  margin-top: 4px;
+  line-height: 1.3;
+  margin-bottom: 6px;
 }
 
-.combo-items-list {
+.combo-items-compact {
   list-style: none;
-  margin-top: var(--space-sm);
   background-color: var(--color-bg-body);
-  border-radius: var(--radius-md);
-  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
   border: 1px solid var(--color-border-subtle);
+  margin-bottom: 4px;
 }
 
-.combo-item-li {
-  font-size: 0.8rem;
+.combo-items-compact li {
+  font-size: 0.74rem;
   font-weight: 600;
   color: var(--color-text-primary);
-  padding: 4px 0;
+  line-height: 1.35;
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 5px;
 }
 
-.combo-item-li::before {
-  content: "✔";
+.check-icon {
   color: var(--color-green-accent);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
-.combo-note-text {
-  font-size: 0.73rem;
+.combo-note-compact {
+  font-size: 0.7rem;
   color: var(--color-text-muted);
-  margin-top: var(--space-xs);
   font-style: italic;
+  margin-top: 2px;
 }
 
 .combo-courtesy-badge {
@@ -1054,15 +1032,176 @@ a {
   background-color: var(--color-gold-light);
   border: 1px solid #f6d884;
   color: var(--color-gold-dark);
-  font-size: 0.74rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  padding: 4px 9px;
+  padding: 2px 7px;
   border-radius: var(--radius-sm);
-  margin-top: var(--space-xs);
+  margin-bottom: 4px;
+}
+
+/* Columna lateral con miniatura del afiche proporcional 4:5 y disparador de ampliación */
+.combo-compact-thumb-wrap {
+  width: 105px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 380px) {
+  .combo-compact-thumb-wrap {
+    width: 90px;
+  }
+}
+
+.combo-thumb-btn {
+  width: 100%;
+  position: relative;
+  display: block;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--color-border-medium);
+  background-color: #1a1714;
+  text-align: center;
+  transition: transform var(--transition-fast);
+}
+
+.combo-thumb-btn:active {
+  transform: scale(0.96);
+}
+
+.combo-compact-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+}
+
+.thumb-zoom-badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(26, 23, 20, 0.85);
+  color: #ffffff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 3px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  letter-spacing: 0.2px;
 }
 
 /* --------------------------------------------------------------------------
-   12. EXTRAS Y GUARNICIONES (TABLA COMPACTA DE DOS COLUMNAS O CHIPS)
+   12. LIGHTBOX MODAL PARA AMPLIAR AFICHES DE COMBOS
+   -------------------------------------------------------------------------- */
+.flyer-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.flyer-lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(10, 8, 7, 0.88);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.lightbox-dialog {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 440px;
+  background-color: #ffffff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.lightbox-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.lightbox-image-wrap {
+  width: 100%;
+  background-color: #12100e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-img {
+  width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  display: block;
+}
+
+.lightbox-caption {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.lightbox-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--color-red-primary);
+}
+
+.lightbox-price {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--color-green-accent);
+}
+
+/* --------------------------------------------------------------------------
+   13. EXTRAS Y GUARNICIONES
    -------------------------------------------------------------------------- */
 .extras-grid {
   display: grid;
@@ -1095,13 +1234,14 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   13. SECCIÓN HISTORIA, CONTACTO Y PIE DE PÁGINA
+   14. SECCIÓN HISTORIA Y CONTACTO
    -------------------------------------------------------------------------- */
 .footer-section {
   background-color: #ffffff;
   border-top: 3px solid var(--color-red-primary);
   padding: var(--space-xl) var(--space-md) var(--space-lg);
   margin-top: var(--space-lg);
+  scroll-margin-top: calc(var(--nav-height) + 14px);
 }
 
 .story-card {
@@ -1143,7 +1283,7 @@ a {
   border-radius: var(--radius-md);
   padding: 12px var(--space-md);
   min-height: 52px;
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .contact-card-link:hover {
@@ -1204,19 +1344,6 @@ a {
   word-break: break-word;
 }
 
-.pedidosya-badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background-color: #fff1f2;
-  border: 1px solid #fecdd3;
-  color: #e11d48;
-  padding: 6px 12px;
-  border-radius: var(--radius-full);
-  font-size: 0.8rem;
-  font-weight: 800;
-}
-
 .footer-copy {
   text-align: center;
   font-size: 0.75rem;
@@ -1227,15 +1354,15 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   14. BARRA DE ACCIÓN RÁPIDA FLOTANTE (MOBILE DOCKED ACTIONS)
+   15. BARRA DE ACCIÓN RÁPIDA FLOTANTE
    -------------------------------------------------------------------------- */
 .floating-action-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.95);
+  z-index: 990;
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-top: 1px solid var(--color-border-subtle);
@@ -1280,7 +1407,7 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   15. ESTADOS DE BÚSQUEDA Y MENÚ VACÍO
+   16. ESTADOS DE BÚSQUEDA Y MENÚ VACÍO
    -------------------------------------------------------------------------- */
 .search-results-feedback {
   background-color: var(--color-gold-light);
@@ -1309,7 +1436,7 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   16. ACCESIBILIDAD Y REDUCED MOTION
+   17. ACCESIBILIDAD Y REDUCED MOTION
    -------------------------------------------------------------------------- */
 :focus-visible {
   outline: 2px solid var(--color-red-primary);
