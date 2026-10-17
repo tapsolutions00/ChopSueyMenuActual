@@ -3,6 +3,56 @@
  * Barra fija en toda la página, combos compactos con modal lightbox y navegación estable.
  */
 
+// ---------------------------------------------------------------------------
+// PANTALLA DE CARGA INICIAL (SPLASH SCREEN)
+// Manejo de animación elegante, duración óptima (~1.4s) y desbloqueo seguro
+// ---------------------------------------------------------------------------
+(function initSplashScreen() {
+  const splashStartTime = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+  const MIN_DISPLAY_TIME = 1400; // 1.4 segundos para una transición agradable
+  const MAX_SAFETY_TIMEOUT = 2800; // Límite de seguridad máximo
+  let isSplashDismissed = false;
+
+  function dismissSplashScreen() {
+    if (isSplashDismissed) return;
+    isSplashDismissed = true;
+
+    const splash = document.getElementById('splash-screen');
+    if (!splash) {
+      document.body.classList.remove('is-splash-active');
+      return;
+    }
+
+    const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+    const elapsed = now - splashStartTime;
+    const remainingTime = Math.max(0, MIN_DISPLAY_TIME - elapsed);
+
+    setTimeout(() => {
+      splash.classList.add('is-hidden');
+      splash.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('is-splash-active');
+
+      // Ocultar completamente una vez finalizada la transición CSS
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 550);
+    }, remainingTime);
+  }
+
+  // Programar salida al completarse la carga de la página
+  if (document.readyState === 'complete') {
+    dismissSplashScreen();
+  } else {
+    window.addEventListener('load', dismissSplashScreen, { once: true });
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(dismissSplashScreen, MIN_DISPLAY_TIME + 200);
+    }, { once: true });
+  }
+
+  // Respaldo de seguridad absoluto
+  setTimeout(dismissSplashScreen, MAX_SAFETY_TIMEOUT);
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
   const data = window.MENU_DATA;
   if (!data) {
