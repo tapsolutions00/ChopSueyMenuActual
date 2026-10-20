@@ -97,13 +97,37 @@ document.addEventListener('DOMContentLoaded', () => {
     return data.sections.find(s => s.id === id);
   }
 
+  // Normalizador de texto para búsquedas (insensible a mayúsculas, acentos, diacríticos y puntuación)
+  function normalizeSearchText(str) {
+    if (!str) return '';
+    return str
+      .toString()
+      .toLowerCase()
+      .replace(/[×✕]/g, 'x')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[-_.,;:()¿?¡!/\\"'`~]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
   // 1. Renderizar Promoción Hero 3×2
   function renderPromoHero() {
     const p = data.promotions.heroPromo;
     if (!promoContainer || !p) return;
 
+    const promoSearchText = normalizeSearchText([
+      p.title,
+      p.headline,
+      p.badge,
+      p.summary,
+      (p.families || []).map(fam => `${fam.name} ${fam.desc}`).join(' '),
+      p.terms,
+      'promo promocion 3x2 especialidad chop suey chow mein arroz chino lo mein'
+    ].filter(Boolean).join(' '));
+
     promoContainer.innerHTML = `
-      <article class="promo-hero-card" id="card-promo-3x2" aria-labelledby="promo-3x2-title">
+      <article class="promo-hero-card" id="card-promo-3x2" data-search-text="${promoSearchText}" aria-labelledby="promo-3x2-title">
         <div class="promo-hero-badge-strip">
           <span>${p.badge}</span>
           <span class="promo-tag-pill">Especialidad</span>
@@ -152,8 +176,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Renderizar Favoritos de la Casa
   function renderFavorites() {
     if (!favoritesContainer) return;
-    favoritesContainer.innerHTML = data.favorites.map(dish => `
-      <article class="featured-dish-card" id="${dish.id}" data-search-text="${dish.name.toLowerCase()} ${dish.description ? dish.description.toLowerCase() : ''} ${dish.categoryTag.toLowerCase()}">
+    favoritesContainer.innerHTML = data.favorites.map(dish => {
+      const favSearchText = normalizeSearchText([
+        dish.name,
+        dish.categoryTag,
+        dish.composition,
+        dish.description,
+        dish.badge,
+        'favorito favoritos'
+      ].filter(Boolean).join(' '));
+
+      return `
+      <article class="featured-dish-card" id="${dish.id}" data-search-text="${favSearchText}">
         <div class="featured-dish-image-wrap">
           <picture>
             <source srcset="${dish.image}" type="image/webp">
@@ -178,7 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
           ${dish.description ? `<p class="dish-desc">${dish.description}</p>` : ''}
         </div>
       </article>
-    `).join('');
+    `;
+    }).join('');
   }
 
   // Helper para renderizar catálogo regular
@@ -188,8 +223,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.innerHTML = `
       <div class="catalog-list" role="list">
-        ${sec.items.map(item => `
-          <div class="catalog-item" role="listitem" id="${item.id}" data-search-text="${item.name.toLowerCase()} ${item.description ? item.description.toLowerCase() : ''} ${sec.title.toLowerCase()}">
+        ${sec.items.map(item => {
+          const itemSearchText = normalizeSearchText([
+            item.name,
+            item.description,
+            item.tag,
+            sec.title,
+            sec.subtitle
+          ].filter(Boolean).join(' '));
+
+          return `
+          <div class="catalog-item" role="listitem" id="${item.id}" data-search-text="${itemSearchText}">
             ${item.photo ? `
               <picture>
                 <source srcset="${item.photo}" type="image/webp">
@@ -212,7 +256,8 @@ document.addEventListener('DOMContentLoaded', () => {
               ${item.tag ? `<span class="catalog-item-tag">${item.tag}</span>` : ''}
             </div>
           </div>
-        `).join('')}
+        `;
+        }).join('')}
       </div>
     `;
   }
@@ -248,8 +293,19 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <div class="variants-table" role="list">
-          ${fam.variants.map(v => `
-            <div class="variant-row ${v.isEspecial ? 'is-especial' : ''}" role="listitem" data-search-text="${v.name.toLowerCase()} ${v.composition ? v.composition.toLowerCase() : ''} ${fam.name.toLowerCase()}">
+          ${fam.variants.map(v => {
+            const variantSearchText = normalizeSearchText([
+              v.name,
+              v.composition,
+              fam.name,
+              fam.accompaniment,
+              fam.description,
+              v.isEspecial ? 'especial' : '',
+              v.isVegetarian ? 'vegetariano vegetariana vegetales' : ''
+            ].filter(Boolean).join(' '));
+
+            return `
+            <div class="variant-row ${v.isEspecial ? 'is-especial' : ''}" role="listitem" data-search-text="${variantSearchText}">
               <div class="variant-main">
                 <div class="variant-name-row">
                   <span class="variant-name">${v.name}</span>
@@ -260,7 +316,8 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <div class="variant-price">${v.priceFormatted}</div>
             </div>
-          `).join('')}
+          `;
+          }).join('')}
         </div>
       </div>
     `).join('');
@@ -270,8 +327,20 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderCombos() {
     if (!combosContainer) return;
     const combos = data.promotions.combos;
-    combosContainer.innerHTML = combos.map(c => `
-      <article class="combo-compact-card" id="${c.id}" data-search-text="${c.name.toLowerCase()} ${(c.items || []).join(' ').toLowerCase()} ${c.details ? c.details.toLowerCase() : ''}">
+    combosContainer.innerHTML = combos.map(c => {
+      const comboSearchText = normalizeSearchText([
+        c.name,
+        c.badge,
+        c.courtesy,
+        (c.options || []).join(' '),
+        (c.items || []).join(' '),
+        c.details,
+        c.note,
+        'combo combos banquete banquetes'
+      ].filter(Boolean).join(' '));
+
+      return `
+      <article class="combo-compact-card" id="${c.id}" data-search-text="${comboSearchText}">
         <div class="combo-compact-main">
           <div class="combo-compact-header">
             <span class="combo-type-tag">${c.badge}</span>
@@ -317,7 +386,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </button>
         </div>
       </article>
-    `).join('');
+    `;
+    }).join('');
 
     setupLightboxListeners();
   }
@@ -373,12 +443,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     extrasContainer.innerHTML = `
       <div class="extras-grid" role="list">
-        ${sec.items.map(item => `
-          <div class="extra-chip" role="listitem" data-search-text="${item.name.toLowerCase()} extra">
+        ${sec.items.map(item => {
+          const extraSearchText = normalizeSearchText([
+            item.name,
+            'extra extras guarnicion guarniciones acompanamiento'
+          ].filter(Boolean).join(' '));
+
+          return `
+          <div class="extra-chip" role="listitem" data-search-text="${extraSearchText}">
             <span class="extra-name">${item.name}</span>
             <span class="extra-price">${item.priceFormatted}</span>
           </div>
-        `).join('')}
+        `;
+        }).join('')}
       </div>
     `;
   }
@@ -435,9 +512,16 @@ document.addEventListener('DOMContentLoaded', () => {
     pill.addEventListener('click', (e) => {
       e.preventDefault();
       const targetId = pill.getAttribute('data-target');
-      const targetEl = document.getElementById(targetId);
+      let targetEl = document.getElementById(targetId);
 
       if (!targetEl) return;
+
+      // Si la sección objetivo está oculta por búsqueda activa, restablecer la búsqueda para mostrarla
+      if (targetEl.offsetParent === null && searchInput && searchInput.value) {
+        searchInput.value = '';
+        handleSearch();
+        targetEl = document.getElementById(targetId);
+      }
 
       isClickScrolling = true;
       if (clickScrollTimer) clearTimeout(clickScrollTimer);
@@ -485,7 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < observedSectionIds.length; i++) {
       const el = document.getElementById(observedSectionIds[i]);
-      if (el) {
+      if (el && el.offsetParent !== null) {
         const rect = el.getBoundingClientRect();
         if (rect.top <= triggerPoint) {
           currentSectionId = observedSectionIds[i];
@@ -507,55 +591,82 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   // =========================================================================
-  // 8. BÚSQUEDA Y FILTRADO EN TIEMPO REAL
+  // 8. BÚSQUEDA Y FILTRADO EN TIEMPO REAL INTELIGENTE Y MULTI-CAMPO
   // =========================================================================
   function handleSearch() {
-    const query = searchInput.value.trim().toLowerCase();
+    const rawQuery = searchInput.value.trim();
+    const normalizedQuery = normalizeSearchText(rawQuery);
+    const tokens = normalizedQuery.split(/\s+/).filter(Boolean);
 
-    if (query === '') {
+    // Si la búsqueda está vacía o contiene solo espacios: restaurar estado original
+    if (tokens.length === 0) {
       if (searchFeedback) searchFeedback.style.display = 'none';
       if (searchClearBtn) searchClearBtn.style.display = 'none';
       if (noResultsBox) noResultsBox.style.display = 'none';
 
+      // Restaurar visibilidad original de todos los platillos
       document.querySelectorAll('[data-search-text]').forEach(el => {
         el.style.display = '';
       });
-      document.querySelectorAll('.section-wrapper, .family-block, .sub-catalog-block').forEach(sec => {
+
+      // Restaurar visibilidad original de familias, sub-bloques y secciones
+      document.querySelectorAll('.family-block, .sub-catalog-block, .section-wrapper').forEach(sec => {
         sec.style.display = '';
       });
       return;
     }
 
+    // Mostrar botón de limpiar búsqueda cuando hay texto
     if (searchClearBtn) searchClearBtn.style.display = 'flex';
 
     let totalMatches = 0;
     const searchableItems = document.querySelectorAll('[data-search-text]');
 
+    // Filtrar platillos: cada platillo debe contener TODOS los términos buscados (AND lógico)
     searchableItems.forEach(el => {
-      const text = el.getAttribute('data-search-text') || '';
-      const matches = text.includes(query);
+      const itemText = el.getAttribute('data-search-text') || '';
+      const matches = tokens.every(token => itemText.includes(token));
       el.style.display = matches ? '' : 'none';
       if (matches) totalMatches++;
     });
 
-    // Ocultar familias completas si no tienen variantes visibles
+    // Actualizar visibilidad de familias (ocultar si ninguna variante coincide)
     document.querySelectorAll('.family-block').forEach(fam => {
       const visibleVariants = fam.querySelectorAll('.variant-row:not([style*="display: none"])');
       fam.style.display = (visibleVariants.length > 0) ? '' : 'none';
     });
 
-    if (searchFeedback && searchFeedbackText) {
-      searchFeedback.style.display = 'flex';
-      searchFeedbackText.textContent = `${totalMatches} ${totalMatches === 1 ? 'resultado encontrado' : 'resultados encontrados'} para "${query}"`;
-    }
+    // Actualizar visibilidad de sub-bloques de catálogo (ocultar si no tienen elementos visibles)
+    document.querySelectorAll('.sub-catalog-block').forEach(subBlock => {
+      const hasVisibleItems = subBlock.querySelector('[data-search-text]:not([style*="display: none"])') !== null;
+      const hasVisibleFamilies = subBlock.querySelector('.family-block:not([style*="display: none"])') !== null;
+      subBlock.style.display = (hasVisibleItems || hasVisibleFamilies) ? '' : 'none';
+    });
 
-    if (noResultsBox) {
-      noResultsBox.style.display = (totalMatches === 0) ? 'block' : 'none';
+    // Actualizar visibilidad de secciones principales (ocultar si no tienen elementos visibles)
+    document.querySelectorAll('.section-wrapper').forEach(sec => {
+      const hasVisibleItems = sec.querySelector('[data-search-text]:not([style*="display: none"])') !== null;
+      const hasVisibleFamilies = sec.querySelector('.family-block:not([style*="display: none"])') !== null;
+      sec.style.display = (hasVisibleItems || hasVisibleFamilies) ? '' : 'none';
+    });
+
+    // Estado vacío y retroalimentación de resultados
+    if (totalMatches === 0) {
+      if (searchFeedback) searchFeedback.style.display = 'none';
+      if (noResultsBox) noResultsBox.style.display = 'block';
+    } else {
+      if (noResultsBox) noResultsBox.style.display = 'none';
+      if (searchFeedback && searchFeedbackText) {
+        searchFeedback.style.display = 'flex';
+        const displayQuery = rawQuery.replace(/\s+/g, ' ');
+        searchFeedbackText.textContent = `${totalMatches} ${totalMatches === 1 ? 'resultado encontrado' : 'resultados encontrados'} para "${displayQuery}"`;
+      }
     }
   }
 
   if (searchInput) {
     searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('search', handleSearch);
   }
 
   if (searchClearBtn) {
