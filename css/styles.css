@@ -1566,3 +1566,195 @@ body.is-splash-active {
   }
 }
 
+/* ==========================================================================
+   TAP SOLUTIONS — INTEGRACIÓN DE MARCA
+   Componentes aislados. Prefijo .ts- para evitar colisiones con el proyecto.
+   No modifica ningún estilo existente del restaurante.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   TS-1. FIRMA FLOTANTE "by Tap Solutions"
+   Posición fija inferior derecha, minimalista y discreta.
+   -------------------------------------------------------------------------- */
+.ts-floating-badge {
+  position: fixed;
+  bottom: 76px; /* Clearance sobre la floating-action-bar (≈68px) */
+  right: 14px;
+  z-index: 980; /* Justo debajo de la floating-action-bar (990) */
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 82, 147, 0.15);
+  border-radius: 20px;
+  padding: 5px 10px 5px 7px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  text-decoration: none;
+  cursor: default;
+  pointer-events: auto;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.ts-floating-badge:hover {
+  box-shadow: 0 4px 14px rgba(0, 82, 147, 0.18);
+  opacity: 1;
+}
+
+.ts-floating-badge__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  object-fit: contain;
+  display: block;
+}
+
+.ts-floating-badge__text {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #1a4a7a;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.ts-floating-badge__text strong {
+  font-weight: 800;
+  color: #005293;
+}
+
+/* En escritorio sube un poco más para que no compita con nada */
+@media (min-width: 640px) {
+  .ts-floating-badge {
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+/* En pantallas muy pequeñas reducimos aún más */
+@media (max-width: 360px) {
+  .ts-floating-badge {
+    bottom: 74px;
+    right: 10px;
+    padding: 4px 8px 4px 6px;
+    gap: 4px;
+  }
+  .ts-floating-badge__icon {
+    width: 15px;
+    height: 15px;
+  }
+  .ts-floating-badge__text {
+    font-size: 0.62rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   TS-2. SECCIÓN CORPORATIVA INFERIOR
+   Independiente, después del footer del restaurante.
+   -------------------------------------------------------------------------- */
+.ts-brand-section {
+  background-color: #000000;
+  border-top: 1px solid #222222;
+  padding: 28px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.ts-brand-section__divider {
+  width: 36px;
+  height: 2px;
+  background: linear-gradient(90deg, #005293, #00b4d8);
+  border-radius: 2px;
+  margin: 0 auto 2px;
+  opacity: 0.7;
+}
+
+.ts-brand-section__logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ts-brand-section__logo {
+  width: auto;
+  height: 52px;
+  max-width: 220px;
+  object-fit: contain;
+  display: block;
+}
+
+.ts-brand-section__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.ts-brand-section__tagline {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.1px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.ts-brand-section__desc {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #9ab8cc;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.ts-brand-section__copy {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: #556677;
+  margin: 0;
+  padding-top: 6px;
+  border-top: 1px solid #222222;
+  width: 100%;
+  text-align: center;
+}
+
+/* Disposición horizontal en escritorio */
+@media (min-width: 560px) {
+  .ts-brand-section {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    padding: 24px 32px 28px;
+    text-align: left;
+  }
+
+  .ts-brand-section__logo {
+    height: 48px;
+  }
+
+  .ts-brand-section__content {
+    align-items: flex-start;
+  }
+
+  .ts-brand-section__divider {
+    display: none; /* En horizontal no necesitamos el divisor */
+  }
+
+  .ts-brand-section__copy {
+    border-top: none;
+    padding-top: 0;
+    text-align: left;
+  }
+}
+
+

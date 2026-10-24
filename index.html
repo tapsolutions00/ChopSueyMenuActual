@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#d91c1b">
-  <meta name="description" content="Menú digital oficial de Chop Suey Internacional. Sabor y tradición oriental en Los Robles, Managua. Consulta platos chinos, arroces, sopas y promociones 3x2.">
+  <meta name="description"
+    content="Menú digital oficial de Chop Suey Internacional. Sabor y tradición oriental en Los Robles, Managua. Consulta platos chinos, arroces, sopas y promociones 3x2.">
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Chop Suey Internacional | Menú Digital">
-  <meta property="og:description" content="Sabor y tradición oriental en Los Robles, Managua. Consulta nuestro menú completo y promociones 3x2.">
+  <meta property="og:description"
+    content="Sabor y tradición oriental en Los Robles, Managua. Consulta nuestro menú completo y promociones 3x2.">
   <meta property="og:image" content="assets/images/logo/logo.png">
   <meta property="og:type" content="website">
 
@@ -19,7 +22,9 @@
   <!-- Google Fonts: Outfit (Titulares) y Plus Jakarta Sans (Cuerpo) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" type="image/png" href="assets/images/logo/logo.png">
@@ -38,17 +43,24 @@
       align-items: center;
       justify-content: center;
     }
+
     body.is-splash-active {
       overflow: hidden !important;
     }
   </style>
   <noscript>
     <style>
-      .splash-screen { display: none !important; }
-      body.is-splash-active { overflow: auto !important; }
+      .splash-screen {
+        display: none !important;
+      }
+
+      body.is-splash-active {
+        overflow: auto !important;
+      }
     </style>
   </noscript>
 </head>
+
 <body class="is-splash-active">
 
   <!-- ==========================================================================
@@ -59,15 +71,8 @@
       <div class="splash-logo-wrapper">
         <picture>
           <source srcset="assets/images/logo/splash-logo.webp" type="image/webp">
-          <img 
-            src="assets/images/logo/splash-logo.png" 
-            alt="Chop Suey Internacional" 
-            class="splash-logo-img"
-            width="220"
-            height="218"
-            fetchpriority="high"
-            decoding="async"
-          >
+          <img src="assets/images/logo/splash-logo.png" alt="Chop Suey Internacional" class="splash-logo-img"
+            width="220" height="218" fetchpriority="high" decoding="async">
         </picture>
         <div class="splash-progress-track" aria-hidden="true">
           <div class="splash-progress-bar"></div>
@@ -84,13 +89,8 @@
         <div class="brand-logo-frame">
           <picture>
             <source srcset="assets/images/logo/logo.webp" type="image/webp">
-            <img 
-              src="assets/images/logo/logo.png" 
-              alt="Logo oficial de Chop Suey Internacional" 
-              class="brand-logo-img"
-              width="58"
-              height="58"
-            >
+            <img src="assets/images/logo/logo.png" alt="Logo oficial de Chop Suey Internacional" class="brand-logo-img"
+              width="58" height="58">
           </picture>
         </div>
 
@@ -112,22 +112,20 @@
       <!-- Barra de búsqueda rápida e instantánea -->
       <div class="header-actions">
         <div class="search-bar-wrap">
-          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <input 
-            type="search" 
-            id="menu-search-input" 
-            class="search-input" 
-            placeholder="Buscar plato, ej: arroz, wantán, pollo..." 
-            aria-label="Buscar en el menú"
-          >
+          <input type="search" id="menu-search-input" class="search-input"
+            placeholder="Buscar plato, ej: arroz, wantán, pollo..." aria-label="Buscar en el menú">
           <button type="button" id="search-clear-btn" class="search-clear-btn" aria-label="Limpiar búsqueda">✕</button>
         </div>
 
         <a href="tel:22255753" class="quick-call-btn" title="Llamar al restaurante">
           <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
+            <path
+              d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z" />
           </svg>
           <span>Llamar</span>
         </a>
@@ -137,11 +135,13 @@
     <!-- 2. NAVEGACIÓN STICKY DE CATEGORÍAS -->
     <nav class="sticky-nav-container" aria-label="Categorías del Menú">
       <div class="categories-nav" role="tablist">
-        <button class="cat-pill is-active" data-target="seccion-promociones" role="tab" aria-selected="true">🔥 Promociones</button>
+        <button class="cat-pill is-active" data-target="seccion-promociones" role="tab" aria-selected="true">🔥
+          Promociones</button>
         <button class="cat-pill" data-target="seccion-favoritos" role="tab" aria-selected="false">⭐ Favoritos</button>
         <button class="cat-pill" data-target="seccion-entradas" role="tab" aria-selected="false">🥟 Entradas</button>
         <button class="cat-pill" data-target="seccion-sopas" role="tab" aria-selected="false">🍜 Sopas</button>
-        <button class="cat-pill" data-target="seccion-platos-fuertes" role="tab" aria-selected="false">🥢 Platos Fuertes</button>
+        <button class="cat-pill" data-target="seccion-platos-fuertes" role="tab" aria-selected="false">🥢 Platos
+          Fuertes</button>
         <button class="cat-pill" data-target="seccion-combos" role="tab" aria-selected="false">🍱 Combos</button>
         <button class="cat-pill" data-target="seccion-bebidas" role="tab" aria-selected="false">🥤 Bebidas</button>
         <button class="cat-pill" data-target="seccion-mas" role="tab" aria-selected="false">➕ Más</button>
@@ -204,7 +204,7 @@
 
       <!-- 7. PLATOS FUERTES (PLATOS CHINOS, LAS 4 FAMILIAS Y PLATOS INTERNACIONALES) -->
       <section class="section-wrapper" id="seccion-platos-fuertes" aria-label="Platos Fuertes">
-        
+
         <!-- Sub-bloque 1: Platos Chinos Tradicionales -->
         <div class="sub-catalog-block" style="margin-bottom: 24px;">
           <div class="section-header">
@@ -305,7 +305,9 @@
         <div class="story-card">
           <h3 class="story-card-title">Chop Suey Internacional</h3>
           <p class="story-card-text">
-            Sabor y tradición culinaria oriental en el corazón de Managua. Desde nuestras clásicas recetas al wok preparadas al instante hasta una esmerada atención, te invitamos a disfrutar cada plato elaborado con ingredientes frescos y el toque único de la casa.
+            Sabor y tradición culinaria oriental en el corazón de Managua. Desde nuestras clásicas recetas al wok
+            preparadas al instante hasta una esmerada atención, te invitamos a disfrutar cada plato elaborado con
+            ingredientes frescos y el toque único de la casa.
           </p>
         </div>
 
@@ -314,7 +316,8 @@
           <a href="https://wa.me/50587344040" target="_blank" rel="noopener noreferrer" class="contact-card-link">
             <div class="contact-icon-frame icon-whatsapp">
               <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.8 14.16c-.24.67-1.39 1.29-1.93 1.37-.51.08-1.18.11-3.41-.81-2.85-1.18-4.69-4.08-4.83-4.27-.14-.19-1.16-1.54-1.16-2.94 0-1.4 0.73-2.09 0.99-2.38.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.42-.07.66.5.24.58.82 2 .89 2.15.07.15.12.33.02.53-.1.19-.15.31-.3.49-.15.17-.31.39-.45.52-.15.15-.31.31-.13.62.18.31.79 1.3 1.7 2.11 1.17 1.04 2.15 1.36 2.46 1.51.31.15.49.13.67-.08.19-.21.79-.92 1-1.24.21-.31.42-.26.7-.16.29.1.1.82 2.87 2.22.19.1.33.16.42.26.13.14.13.82-.11 1.49z"/>
+                <path
+                  d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.8 14.16c-.24.67-1.39 1.29-1.93 1.37-.51.08-1.18.11-3.41-.81-2.85-1.18-4.69-4.08-4.83-4.27-.14-.19-1.16-1.54-1.16-2.94 0-1.4 0.73-2.09 0.99-2.38.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.42-.07.66.5.24.58.82 2 .89 2.15.07.15.12.33.02.53-.1.19-.15.31-.3.49-.15.17-.31.39-.45.52-.15.15-.31.31-.13.62.18.31.79 1.3 1.7 2.11 1.17 1.04 2.15 1.36 2.46 1.51.31.15.49.13.67-.08.19-.21.79-.92 1-1.24.21-.31.42-.26.7-.16.29.1.1.82 2.87 2.22.19.1.33.16.42.26.13.14.13.82-.11 1.49z" />
               </svg>
             </div>
             <div class="contact-text-wrap">
@@ -327,7 +330,8 @@
           <a href="tel:22255753" class="contact-card-link">
             <div class="contact-icon-frame icon-phone">
               <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
+                <path
+                  d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z" />
               </svg>
             </div>
             <div class="contact-text-wrap">
@@ -340,7 +344,8 @@
           <div class="contact-card-link">
             <div class="contact-icon-frame icon-location">
               <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/>
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
               </svg>
             </div>
             <div class="contact-text-wrap">
@@ -365,32 +370,64 @@
         </div>
       </footer>
 
+      <!-- TS-2: SECCIÓN CORPORATIVA TAP SOLUTIONS
+           Elemento independiente. No modifica el footer original del restaurante. -->
+      <section class="ts-brand-section" aria-label="Diseñado y desarrollado por Tap Solutions">
+        <div class="ts-brand-section__divider" aria-hidden="true"></div>
+        <div class="ts-brand-section__logo-wrap">
+          <img src="assets/images/tap-solutions/tap-solutions-logo.png" alt="Tap Solutions — Diseño y desarrollo web"
+            class="ts-brand-section__logo" width="220" height="52" loading="lazy" decoding="async">
+        </div>
+        <div class="ts-brand-section__content">
+          <p class="ts-brand-section__tagline">Transformamos tus ideas en experiencias digitales.</p>
+          <p class="ts-brand-section__desc">Digitalizamos ideas. Construimos soluciones. Conectamos tu negocio.</p>
+          <p class="ts-brand-section__copy">Diseño y desarrollo digital · Tap Solutions</p>
+        </div>
+      </section>
+
     </main>
 
     <!-- 12. BARRA FLOTANTE DE ACCIONES RÁPIDAS (MOBILE DOCKED ACTIONS) -->
     <aside class="floating-action-bar" aria-label="Acciones rápidas">
       <div class="floating-action-inner">
-        <a href="https://wa.me/50587344040" target="_blank" rel="noopener noreferrer" class="floating-btn floating-btn-whatsapp">
+        <a href="https://wa.me/50587344040" target="_blank" rel="noopener noreferrer"
+          class="floating-btn floating-btn-whatsapp">
           <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.8 14.16c-.24.67-1.39 1.29-1.93 1.37-.51.08-1.18.11-3.41-.81-2.85-1.18-4.69-4.08-4.83-4.27-.14-.19-1.16-1.54-1.16-2.94 0-1.4 0.73-2.09 0.99-2.38.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.42-.07.66.5.24.58.82 2 .89 2.15.07.15.12.33.02.53-.1.19-.15.31-.3.49-.15.17-.31.39-.45.52-.15.15-.31.31-.13.62.18.31.79 1.3 1.7 2.11 1.17 1.04 2.15 1.36 2.46 1.51.31.15.49.13.67-.08.19-.21.79-.92 1-1.24.21-.31.42-.26.7-.16.29.1.1.82 2.87 2.22.19.1.33.16.42.26.13.14.13.82-.11 1.49z"/>
+            <path
+              d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.8 14.16c-.24.67-1.39 1.29-1.93 1.37-.51.08-1.18.11-3.41-.81-2.85-1.18-4.69-4.08-4.83-4.27-.14-.19-1.16-1.54-1.16-2.94 0-1.4 0.73-2.09 0.99-2.38.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.42-.07.66.5.24.58.82 2 .89 2.15.07.15.12.33.02.53-.1.19-.15.31-.3.49-.15.17-.31.39-.45.52-.15.15-.31.31-.13.62.18.31.79 1.3 1.7 2.11 1.17 1.04 2.15 1.36 2.46 1.51.31.15.49.13.67-.08.19-.21.79-.92 1-1.24.21-.31.42-.26.7-.16.29.1.1.82 2.87 2.22.19.1.33.16.42.26.13.14.13.82-.11 1.49z" />
           </svg>
           <span>WhatsApp 8734-4040</span>
         </a>
 
         <a href="tel:22255753" class="floating-btn floating-btn-call">
           <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
+            <path
+              d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z" />
           </svg>
           <span>Llamar</span>
         </a>
       </div>
     </aside>
 
+    <!-- TS-1: FIRMA FLOTANTE TAP SOLUTIONS
+         Elemento independiente, position:fixed inferior derecha.
+         z-index 980, justo debajo de la floating-action-bar (990).
+         Se oculta automáticamente en escritorio por encima de la barra. -->
+    <a href="https://tap-solutions-web.vercel.app" target="_blank" rel="noopener noreferrer" class="ts-floating-badge"
+      aria-label="Página diseñada y desarrollada por Tap Solutions" title="Diseñado por Tap Solutions" tabindex="0"
+      role="note">
+      <img src="assets/images/tap-solutions/tap-solutions-logo.png" alt="" class="ts-floating-badge__icon"
+        aria-hidden="true" loading="lazy" decoding="async" width="18" height="18">
+      <span class="ts-floating-badge__text">by <strong>Tap Solutions</strong></span>
+    </a>
+
     <!-- 13. LIGHTBOX MODAL PARA AFICHES DE COMBOS Y BANQUETES -->
-    <div id="flyer-lightbox" class="flyer-lightbox" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div id="flyer-lightbox" class="flyer-lightbox" role="dialog" aria-modal="true" aria-hidden="true"
+      style="display: none;">
       <div class="lightbox-overlay" id="lightbox-overlay" aria-label="Cerrar modal"></div>
       <div class="lightbox-dialog">
-        <button type="button" class="lightbox-close-btn" id="lightbox-close-btn" aria-label="Cerrar vista de afiche">✕</button>
+        <button type="button" class="lightbox-close-btn" id="lightbox-close-btn"
+          aria-label="Cerrar vista de afiche">✕</button>
         <div class="lightbox-image-wrap">
           <img id="lightbox-img" src="" alt="Afiche ampliado" class="lightbox-img">
         </div>
@@ -407,4 +444,5 @@
   <script src="js/menu-data.js"></script>
   <script src="js/app.js"></script>
 </body>
+
 </html>
